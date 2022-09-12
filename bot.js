@@ -2,6 +2,8 @@ const {Telegraf, session, Markup} = require('telegraf');
 const env = require('dotenv');
 const sequelize = require('./sequelize');
 const {models} = require('./sequelize');
+const axios = require('axios');
+const menuKeyboard = require('./keyboards/menu.keyboard');
 
 if (process.env.NODE_ENV === 'development') {
   env.config({path: '.development.env'});
@@ -27,13 +29,34 @@ bot.start(async ctx => {
 
     await user.save();
   }
-  ctx.replyWithHTML(
+  return ctx.replyWithHTML(
     'Здравствуйте. Нажмите на любую интересующую Вас кнопку',
-    Markup.inlineKeyboard([
-      Markup.button.callback('Погода в Канаде', 'wether'),
-      Markup.button.callback('Хочу почитать!', 'read'),
-      Markup.button.callback('Сделать рассылку', 'mailing'),
-    ], {wrap: (btn, index, currentRow) => currentRow.length >= index / 2}));
+    menuKeyboard
+  );
+});
+
+bot.action('menu', async ctx => {
+  return ctx.editMessageText(
+    'Здравствуйте. Нажмите на любую интересующую Вас кнопку',
+    menuKeyboard
+  );
+});
+
+
+bot.action('weather', async ctx => {
+  const res = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
+    params: {
+      q: 'toronto',
+      lang: 'ru',
+      units: 'metric',
+      appid: '360158d995629e1c0b69119273d14e01'
+    }
+  });
+  const weather = res.data.weather[0].description;
+  const temp = Math.floor(res.data.main.temp);
+
+  const message = `Погода в Торонто, Канада: ${weather}, ${temp} ℃`
+  return ctx.editMessageText(message, Markup.inlineKeyboard([Markup.button.callback('Назад в меню', 'menu')]));
 });
 
 
