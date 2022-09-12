@@ -58,7 +58,7 @@ bot.action('weather', async ctx => {
       q: 'toronto',
       lang: 'ru',
       units: 'metric',
-      appid: '360158d995629e1c0b69119273d14e01'
+      appid: process.env.WEATHER_TOKEN
     }
   });
   const weather = res.data.weather[0].description;
