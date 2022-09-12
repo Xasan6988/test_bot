@@ -1,0 +1,17 @@
+version: "3.0"
+services:
+  postgres:
+    container_name: pg
+    image: postgres:latest
+    env_file:
+      - .development.env
+    environment:
+      PG_DATA: /var/lib/postgresql/data
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    restart: always
+
+volumes:
+  pgdata:
