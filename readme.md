@@ -2,10 +2,11 @@
 ____
 
 Для работы бота вам понадобятся:
-- База данных PostgreSQL
+- PostgreSQL
 - NodeJS
 
 ----
+## Определение констант
 
 Для начала необходимо создать файл зависимостей.
 В проекте используется два .env файла для разработки и продакшена - .development.env и .production.env соответственно.
@@ -14,15 +15,17 @@ ____
 
 Константы, использующиеся в проекте:
 - BOT_TOKEN - токен телеграм бота
-- POSTGRES_DB - имя базы данных
+- POSTGRES_DB - имя БД
 - POSTGRES_USER - логин пользователя БД
-- POSTGRES_PASSWORD пароль пользователя БД
+- POSTGRES_PASSWORD - пароль пользователя БД
 - PG_HOST - адрес БД
 - PG_PORT - порт БД
 - WEATHER_TOKEN - токен [сервиса погоды](https://openweathermap.org/)
 
 
 ____
+
+## Подготовка PostgreSQL
 
 В папке проекта присутсвует [docker-compose](https://github.com/Xasan6988/test_bot/blob/master/docker-compose.yml) файл. С помощью него можно поднять Postgres локально в докере.
 
