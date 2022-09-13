@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
   env.config({path: '.production.env'});
 }
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Telegraf(process.env.BOT_TOKEN, {polling: true});
 
 
 bot.use(session());
